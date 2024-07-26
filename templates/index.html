@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentence Generator</title>
+    <script>
+        async function generateSentence() {
+            try {
+                const response = await fetch('/generate');
+                const data = await response.json();
+                const resultDiv = document.getElementById('result');
+                if (data.sentence) {
+                    resultDiv.textContent = data.sentence;
+                } else {
+                    resultDiv.textContent = data.error;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Sentence Generator</h1>
+    <button onclick="generateSentence()">Generate Sentence</button>
+    <div id="result"></div>
+</body>
+</html>
