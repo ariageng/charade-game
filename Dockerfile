@@ -11,9 +11,10 @@ COPY . /app
 RUN pip install -r requirements.txt
 
 # Install GF (Grammatical Framework)
-RUN apt-get update && apt-get install -y wget \
-    && wget -q -O - https://www.grammaticalframework.org/gf-windows-x86_64-debs.html | bash \
-    && apt-get install -y gf
+RUN apt-get update && apt-get install -y wget gnupg \
+    && wget -qO - https://www.grammaticalframework.org/releases/apt/gf-signing-key.asc | apt-key add - \
+    && echo "deb [arch=amd64] https://www.grammaticalframework.org/releases/apt stable main" > /etc/apt/sources.list.d/gf.list \
+    && apt-get update && apt-get install -y gf
 
 # Expose port 8080 for the app
 EXPOSE 8080
